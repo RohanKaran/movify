@@ -22,7 +22,7 @@ def fetchDataFromKaggle():
     df = pickle.load(urlopen(link['files'][0]['url']))
     sm = pickle.load(urlopen(link['files'][1]['url']))
     print(df)
-    return df
+    return df, sm
 
 
 # @st.experimental_memo
