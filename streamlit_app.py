@@ -2,6 +2,7 @@ import bz2
 import json
 import os
 import pickle
+import random
 from urllib.request import urlopen
 import streamlit as st
 from kaggle.api import KaggleApi
@@ -30,7 +31,7 @@ def main():
     tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
     poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=' + tmdb_ak + '&external_source=imdb_id'
 
-    movie = st.selectbox('Search for a movie', options=f['primaryTitle'].values, index=0)
+    movie = st.selectbox('Search for a movie', options=f['primaryTitle'].values, index=random.randrange(len(f)))
     st.header("\n")
 
     # recommendation by getting value from similarity matrix
