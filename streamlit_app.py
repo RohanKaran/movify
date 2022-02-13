@@ -29,7 +29,7 @@ def main():
     # setting streamlit config
     st.set_page_config(
         page_title="Movify",
-        page_icon="🧊",
+        page_icon="Ⓜ",
         menu_items={
             'Get Help': 'https://linkedin.com/in/rohankaran001',
             'About':
