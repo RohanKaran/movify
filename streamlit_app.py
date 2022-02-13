@@ -18,7 +18,7 @@ def fetchDataFromKaggle():
 def main():
     st.header("Movie Recommender")
     f, similarity_mat = fetchDataFromKaggle()
-    movie = st.selectbox('Select', ['Select'] + f['primaryTitle'].values)
+    movie = st.selectbox('Select', f['primaryTitle'].values)
     movie = f[f.primaryTitle == movie]
     movie_index = movie.index[len(movie) - 1]
     distances = similarity_mat[movie_index]
