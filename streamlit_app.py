@@ -1,5 +1,7 @@
 import bz2
+import json
 import pickle
+import random
 from urllib.request import urlopen
 import streamlit as st
 from kaggle.api import KaggleApi
@@ -15,10 +17,19 @@ def fetchDataFromKaggle():
     return df, sm
 
 
+def movieOrWebSeries(js):
+    for key in js:
+        if len(js[key]) != 0:
+            return str(key)
+    return False
+
+
 def main():
     st.header("Movie Recommender")
     f, similarity_mat = fetchDataFromKaggle()
-    movie = st.selectbox('Select', f['primaryTitle'].values)
+    movie = st.selectbox('Search for a movie', options=f['primaryTitle'].values, index=random.randrange(len(f)))
+
+    # recommendation by getting value from similarity matrix
     movie = f[f.primaryTitle == movie]
     movie_index = movie.index[len(movie) - 1]
     distances = similarity_mat[movie_index]
@@ -32,8 +43,98 @@ def main():
 
     result = []
     for i in mlist:
-        result.append(f.iloc[i].primaryTitle)
-    st.write(result)
+        result.append([f.iloc[i].tconst, f.iloc[i].primaryTitle])
+
+    # recommendations show
+    st.subheader("Recommendations for you")
+
+    poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=e582aa36019232c67cb4889a4456d18e&external_source' \
+                  '=imdb_id '
+
+    # column
+    col0, col1, col2, col3, col4 = st.columns(5)
+
+    with col0:
+        api = urlopen(poster_path.format(result[0][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[0][1])
+
+    with col1:
+        api = urlopen(poster_path.format(result[1][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[1][1])
+
+    with col2:
+        api = urlopen(poster_path.format(result[2][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[2][1])
+
+    with col3:
+        api = urlopen(poster_path.format(result[3][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[3][1])
+
+    with col4:
+        api = urlopen(poster_path.format(result[4][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[4][1])
+
+    col5, col6, col7, col8, col9 = st.columns(5)
+
+    with col5:
+        api = urlopen(poster_path.format(result[5][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[5][1])
+
+    with col6:
+        api = urlopen(poster_path.format(result[6][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[6][1])
+
+    with col7:
+        api = urlopen(poster_path.format(result[7][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[7][1])
+
+    with col8:
+        api = urlopen(poster_path.format(result[8][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[8][1])
+
+    with col9:
+        api = urlopen(poster_path.format(result[9][0]))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+        st.write(result[9][1])
 
 
 if __name__ == "__main__":
