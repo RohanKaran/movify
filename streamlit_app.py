@@ -25,7 +25,7 @@ def movieOrWebSeries(js):
 
 
 def main():
-    st.header("Movify")
+    st.title("Movify")
     f, similarity_mat = fetchDataFromKaggle()
     tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
     tmdb_ak = 'e582aa36019232c67cb4889a4456d18e'
