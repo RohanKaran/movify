@@ -1,5 +1,6 @@
 import bz2
 import json
+import os
 import pickle
 import random
 from urllib.request import urlopen
@@ -48,8 +49,8 @@ def main():
     # recommendations show
     st.subheader("Recommendations for you")
 
-    poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=e582aa36019232c67cb4889a4456d18e&external_source' \
-                  '=imdb_id '
+    tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
+    poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=' + tmdb_ak + '&external_source=imdb_id'
 
     # column
     col0, col1, col2, col3, col4 = st.columns(5)
