@@ -2,7 +2,6 @@ import bz2
 import json
 import os
 import pickle
-import random
 from urllib.request import urlopen
 import streamlit as st
 from kaggle.api import KaggleApi
