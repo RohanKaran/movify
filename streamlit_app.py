@@ -13,7 +13,7 @@ def fetchDataFromKaggle():
     api.authenticate()
     link = api.kernel_output(user_name='rohankaran', kernel_slug='movie-recommendation-system')
     df = pickle.load(urlopen(link['files'][0]['url']))
-    sm = pickle.load(bz2.BZ2File(urlopen(link['files'][0]['url']), 'rb'))
+    sm = pickle.load(bz2.BZ2File(urlopen(link['files'][1]['url']), 'rb'))
     return df, sm
 
 
