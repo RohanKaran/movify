@@ -31,7 +31,7 @@ def main():
         page_title="Movify",
         page_icon="🧊",
         menu_items={
-            'Get Help': 'mailto:rohankaran001@gmail.com',
+            'Get Help': 'https://linkedin.com/in/rohankaran001',
             'About':
                 '''
                 # Movify
