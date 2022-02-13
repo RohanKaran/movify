@@ -138,4 +138,5 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 data
+similarity_matrix.pbz2
 

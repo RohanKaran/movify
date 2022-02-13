@@ -2,7 +2,6 @@ import bz2
 import json
 import os
 import pickle
-import random
 from urllib.request import urlopen
 import streamlit as st
 from kaggle.api import KaggleApi
@@ -14,7 +13,7 @@ def fetchDataFromKaggle():
     api.authenticate()
     link = api.kernel_output(user_name='rohankaran', kernel_slug='movie-recommendation-system')
     df = pickle.load(urlopen(link['files'][0]['url']))
-    sm = pickle.load(bz2.BZ2File(urlopen(link['files'][1]['url']), 'rb'))
+    sm = pickle.load(bz2.BZ2File(urlopen(link['files'][0]['url']), 'rb'))
     return df, sm
 
 
@@ -26,9 +25,13 @@ def movieOrWebSeries(js):
 
 
 def main():
-    st.header("Movie Recommender")
+    st.header("Movify")
     f, similarity_mat = fetchDataFromKaggle()
-    movie = st.selectbox('Search for a movie', options=f['primaryTitle'].values, index=random.randrange(len(f)))
+    tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
+    tmdb_ak = 'e582aa36019232c67cb4889a4456d18e'
+    poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=' + tmdb_ak + '&external_source=imdb_id'
+
+    movie = st.selectbox('Search for a movie', options=f['primaryTitle'].values, index=0)
 
     # recommendation by getting value from similarity matrix
     movie = f[f.primaryTitle == movie]
@@ -46,13 +49,36 @@ def main():
     for i in mlist:
         result.append([f.iloc[i].tconst, f.iloc[i].primaryTitle])
 
+    col_in0, col_in1 = st.columns(2)
+
+    with col_in0:
+        api = urlopen(poster_path.format(f.iloc[movie_index].tconst))
+        jobj = json.load(api)
+        poster = jobj[movieOrWebSeries(jobj)][0]["poster_path"]
+        st.image('https://image.tmdb.org/t/p/original' + poster)
+
+    with col_in1:
+        api = urlopen(poster_path.format(f.iloc[movie_index].tconst))
+        jobj = json.load(api)
+
+        st.subheader(f.iloc[movie_index].primaryTitle)
+
+        overview = jobj[movieOrWebSeries(jobj)][0]["overview"]
+        st.write(overview)
+        try:
+            rd = str(jobj[movieOrWebSeries(jobj)][0]["release_date"])
+        except KeyError:
+            rd = str(jobj[movieOrWebSeries(jobj)][0]["first_air_date"])
+        st.write("Release Date : &nbsp;" + rd)
+        rating = str(jobj[movieOrWebSeries(jobj)][0]["vote_average"])
+        st.write("Rating : &nbsp;" + rating + "⭐")
+
+    st.header("\n")
     # recommendations show
     st.subheader("Recommendations for you")
+    st.subheader("\n")
 
-    tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
-    poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=' + tmdb_ak + '&external_source=imdb_id'
-
-    # column
+    # columns
     col0, col1, col2, col3, col4 = st.columns(5)
 
     with col0:
@@ -96,6 +122,7 @@ def main():
         st.write(result[4][1])
 
     col5, col6, col7, col8, col9 = st.columns(5)
+    st.subheader("\n")
 
     with col5:
         api = urlopen(poster_path.format(result[5][0]))
