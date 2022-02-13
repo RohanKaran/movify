@@ -26,6 +26,20 @@ def movieOrWebSeries(js):
 
 
 def main():
+    # setting streamlit config
+    st.set_page_config(
+        page_title="Movify",
+        page_icon="🧊",
+        menu_items={
+            'Get Help': 'mailto:rohankaran001@gmail.com',
+            'About':
+                '''
+                # Movify
+                ### Content based movie recommendation system
+                '''
+        }
+    )
+
     st.title("Movify")
     f, similarity_mat = fetchDataFromKaggle()
     tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
