@@ -122,7 +122,7 @@ def main():
 
         st.write(result[4][1])
 
-    st.header("hi\n")
+    st.write("\n")
     col5, col6, col7, col8, col9 = st.columns(5)
 
     with col5:
