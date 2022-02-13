@@ -33,8 +33,7 @@ def main():
             'Get Help': 'https://linkedin.com/in/rohankaran001',
             'About':
                 '''
-                ## Movify
-                #### Content based movie recommendation system
+                ## Movify #### Content based movie recommendation system
                 '''
         }
     )
