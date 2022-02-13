@@ -44,7 +44,7 @@ def main():
     tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
     poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=' + tmdb_ak + '&external_source=imdb_id'
 
-    movie = st.selectbox('Search for a movie', options=f['primaryTitle'].values, index=len(f) - 1)
+    movie = st.selectbox('Search for a movie', options=f['primaryTitle'].to_numpy(), index=len(f) - 1)
     st.header("\n")
 
     # recommendation by getting value from similarity matrix
