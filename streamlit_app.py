@@ -8,7 +8,7 @@ import streamlit as st
 from kaggle.api import KaggleApi
 
 
-@st.experimental_memo
+@st.experimental_memo(ttl=86400)
 def fetchDataFromKaggle():
     api = KaggleApi()
     api.authenticate()
