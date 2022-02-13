@@ -74,7 +74,7 @@ def main():
         rating = str(jobj[movieOrWebSeries(jobj)][0]["vote_average"])
         st.write("Rating : &nbsp;" + rating + "⭐")
 
-    st.header("\n")
+    st.title("\n")
     # recommendations show
     st.subheader("Recommendations for you")
     st.subheader("\n")
