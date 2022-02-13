@@ -32,6 +32,7 @@ def main():
     poster_path = 'https://api.themoviedb.org/3/find/{}?api_key=' + tmdb_ak + '&external_source=imdb_id'
 
     movie = st.selectbox('Search for a movie', options=f['primaryTitle'].values, index=0)
+    st.header("\n")
 
     # recommendation by getting value from similarity matrix
     movie = f[f.primaryTitle == movie]
@@ -122,7 +123,7 @@ def main():
         st.write(result[4][1])
 
     col5, col6, col7, col8, col9 = st.columns(5)
-    st.subheader("\n")
+    st.header("\n")
 
     with col5:
         api = urlopen(poster_path.format(result[5][0]))
