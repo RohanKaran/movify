@@ -39,6 +39,8 @@ def main():
         }
     )
 
+    st.markdown("[View the updated app here](https://filmybuzz.netlify.app/)")
+
     st.title("Movify")
     f, similarity_mat = fetchDataFromKaggle()
     tmdb_ak = os.getenv('TMDB_API_KEY', 'None')
